@@ -16,9 +16,13 @@ This package can be used as to scaffold a framework agnostic package. Follow the
 
 
 ```php
-$type = Type::new(…);
+$reflectionType = …;
 
-$type->accepts('i');
+$input = new Foo();
+// $input = '';
+// $input = 1.1;
+
+// Does this type accept $input?
 ```
 
 This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
