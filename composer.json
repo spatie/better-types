@@ -1,16 +1,16 @@
 {
-    "name": "vendor_slug/package_slug",
-    "description": ":package_description",
+    "name": "spatie/better-types",
+    "description": "Improved abstraction for dealing with union and named types.",
     "keywords": [
-        ":vendor_name",
-        "package_slug"
+        "spatie",
+        "better-types"
     ],
-    "homepage": "https://github.com/vendor_slug/package_slug",
+    "homepage": "https://github.com/spatie/better-types",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Brent Roose",
+            "email": "brent@spatie.be",
             "role": "Developer"
         }
     ],
@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src"
+            "Spatie\\BetterTypes\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Spatie\\BetterTypes\\Tests\\": "tests"
         }
     },
     "scripts": {
