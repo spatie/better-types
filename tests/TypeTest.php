@@ -116,7 +116,15 @@ class TypeTest extends TestCase
     }
 }
 
-interface FooInterface {}
-abstract class FooTopParent {}
-abstract class FooParent extends FooTopParent {}
-class Foo extends FooParent implements FooInterface {}
+interface FooInterface
+{
+}
+abstract class FooTopParent
+{
+}
+abstract class FooParent extends FooTopParent
+{
+}
+class Foo extends FooParent implements FooInterface
+{
+}

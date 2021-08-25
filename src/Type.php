@@ -20,7 +20,7 @@ class Type
     private array $acceptedTypes = [];
 
     public function __construct(
-        private null|ReflectionNamedType|ReflectionUnionType $type
+        private null | ReflectionNamedType | ReflectionUnionType $type
     ) {
         if ($type === null) {
             $this->isNullable = true;
