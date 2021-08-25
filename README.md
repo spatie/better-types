@@ -25,8 +25,6 @@ $input = new Foo();
 // Does this type accept $input?
 ```
 
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
-
 ## Support us
 
 [<img src="https://github-ads.s3.eu-central-1.amazonaws.com/better-types.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/better-types)
