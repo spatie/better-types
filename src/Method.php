@@ -60,4 +60,34 @@ class Method
             default => self::PUBLIC,
         };
     }
+
+    public function isStatic(): bool
+    {
+        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_STATIC;
+    }
+
+    public function isFinal(): bool
+    {
+        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_FINAL;
+    }
+
+    public function isAbstract(): bool
+    {
+        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_ABSTRACT;
+    }
+
+    public function isPublic(): bool
+    {
+        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PUBLIC;
+    }
+
+    public function isProtected(): bool
+    {
+        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PROTECTED;
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PRIVATE;
+    }
 }

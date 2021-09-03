@@ -5,6 +5,7 @@ namespace Spatie\BetterTypes\Tests;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Spatie\BetterTypes\Handlers;
+use Spatie\BetterTypes\Method;
 
 class HandlersTest extends TestCase
 {
@@ -41,6 +42,38 @@ class HandlersTest extends TestCase
         $this->assertNotNull(Handlers::new(Baz::class)->private()->first([]));
         $this->assertNotNull(Handlers::new(Baz::class)->public()->protected()->private()->first([]));
     }
+
+    /** @test */
+    public function test_filter()
+    {
+        $this->assertNull(
+            Handlers::new(Baz::class)
+                ->filter(fn (Method $method) => ! $method->isFinal())
+                ->first(0.1)
+            );
+
+        $this->assertNotNull(
+            Handlers::new(Baz::class)
+                ->filter(fn (Method $method) => $method->isFinal())
+                ->first(0.1)
+            );
+    }
+
+    /** @test */
+    public function test_reject()
+    {
+        $this->assertNull(
+            Handlers::new(Baz::class)
+                ->reject(fn (Method $method) => $method->isFinal())
+                ->first(0.1)
+            );
+
+        $this->assertNotNull(
+            Handlers::new(Baz::class)
+                ->reject(fn (Method $method) => ! $method->isFinal())
+                ->first(0.1)
+            );
+    }
 }
 
 class Baz
@@ -58,4 +91,6 @@ class Baz
     }
 
     private function invisible(array $input) {}
+
+    final protected function finalFunction(float $float) {}
 }

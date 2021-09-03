@@ -2,6 +2,7 @@
 
 namespace Spatie\BetterTypes;
 
+use Closure;
 use ReflectionClass;
 
 class Handlers
@@ -10,6 +11,9 @@ class Handlers
     private array $methods = [];
 
     private array $visibilityFilter = [];
+
+    /** @var Closure[] */
+    private array $filters = [];
 
     public function __construct(
         private ReflectionClass $class
@@ -40,12 +44,30 @@ class Handlers
                 continue;
             }
 
+            if ($this->filterRejects($method)) {
+                continue;
+            }
+
             if ($method->accepts(...$input)) {
                 $viableMethods[] = $name;
             }
         }
 
         return $viableMethods;
+    }
+
+    public function filter(Closure $filter): self
+    {
+        $this->filters[] = $filter;
+
+        return $this;
+    }
+
+    public function reject(Closure $reject): self
+    {
+        $this->filters[] = fn (Method $method) => ! $reject($method);
+
+        return $this;
     }
 
     public function first(mixed ...$input): ?string
@@ -72,5 +94,16 @@ class Handlers
         $this->visibilityFilter[] = Method::PRIVATE;
 
         return $this;
+    }
+
+    private function filterRejects(Method $method): bool
+    {
+        foreach ($this->filters as $filter) {
+            if ($filter($method) === false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
