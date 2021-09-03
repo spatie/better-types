@@ -18,7 +18,7 @@ class HandlersTest extends TestCase
         $this->assertEquals(['acceptsString', 'acceptsStringToo'], $handlers->find('string'));
         $this->assertEquals(['acceptsStringToo'], $handlers->find(...['b' => 'string']));
         $this->assertEquals(['acceptsInt'], $handlers->find(1));
-        $this->assertEquals([], $handlers->find(new class () {}));
+        $this->assertEquals([], $handlers->find(new class() {}));
     }
 
     /** @test */
@@ -30,15 +30,21 @@ class HandlersTest extends TestCase
 
         $this->assertEquals('acceptsString', $handlers->first('string'));
         $this->assertEquals('acceptsStringToo', $handlers->first(...['b' => 'string']));
-        $this->assertEquals(null, $handlers->first(new class () {}));
+        $this->assertEquals(null, $handlers->first(new class() {}));
     }
 }
 
 class Baz
 {
-    public function acceptsString(string $a) {}
+    public function acceptsString(string $a)
+    {
+    }
 
-    public function acceptsStringToo(string $b) {}
+    public function acceptsStringToo(string $b)
+    {
+    }
 
-    public function acceptsInt(int $a) {}
+    public function acceptsInt(int $a)
+    {
+    }
 }
