@@ -5,7 +5,6 @@ namespace Spatie\BetterTypes;
 use Closure;
 use Illuminate\Support\Collection;
 use ReflectionClass;
-use ReflectionMethod;
 
 class Handlers
 {
