@@ -6,6 +6,10 @@ use ReflectionMethod;
 
 class Method
 {
+    public const PUBLIC = 'public';
+    public const PROTECTED = 'protected';
+    public const PRIVATE = 'private';
+
     /** @var array|Type[] */
     private array $positionalTypes = [];
 
@@ -15,9 +19,9 @@ class Method
     private int $inputCount;
 
     public function __construct(
-        ReflectionMethod $method
+        public ReflectionMethod $reflectionMethod
     ) {
-        foreach ($method->getParameters() as $index => $parameter) {
+        foreach ($reflectionMethod->getParameters() as $index => $parameter) {
             $type = new Type($parameter->getType());
 
             $this->positionalTypes[$index] = $type;
@@ -44,5 +48,16 @@ class Method
         }
 
         return true;
+    }
+
+    public function visibility(): string
+    {
+        $modifiers = $this->reflectionMethod->getModifiers();
+
+        return match(true) {
+            ($modifiers & ReflectionMethod::IS_PRIVATE) !== 0 => self::PRIVATE,
+            ($modifiers & ReflectionMethod::IS_PROTECTED) !== 0 => self::PROTECTED,
+            default => self::PUBLIC,
+        };
     }
 }

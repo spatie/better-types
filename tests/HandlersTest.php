@@ -32,6 +32,15 @@ class HandlersTest extends TestCase
         $this->assertEquals('acceptsStringToo', $handlers->first(...['b' => 'string']));
         $this->assertEquals(null, $handlers->first(new class() {}));
     }
+
+    /** @test */
+    public function test_visibility()
+    {
+        $this->assertNull(Handlers::new(Baz::class)->public()->first([]));
+        $this->assertNull(Handlers::new(Baz::class)->protected()->first([]));
+        $this->assertNotNull(Handlers::new(Baz::class)->private()->first([]));
+        $this->assertNotNull(Handlers::new(Baz::class)->public()->protected()->private()->first([]));
+    }
 }
 
 class Baz
@@ -47,4 +56,6 @@ class Baz
     public function acceptsInt(int $a)
     {
     }
+
+    private function invisible(array $input) {}
 }
