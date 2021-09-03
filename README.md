@@ -50,8 +50,8 @@ $reflectionClass = …
 
 $handlers = new Handlers($reflectionClass);
 
-$handlers->find('string'); // ['acceptsString', 'acceptsStringToo']
-$handlers->find(1); // ['acceptsInt']
+$handlers->accepts('string')->all(); // ['acceptsString', 'acceptsStringToo']
+$handlers->accepts(1)->first(); // 'acceptsInt'
 ```
 
 ## Support us
