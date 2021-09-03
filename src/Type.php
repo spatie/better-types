@@ -3,6 +3,7 @@
 namespace Spatie\BetterTypes;
 
 use ReflectionNamedType;
+use ReflectionType;
 use ReflectionUnionType;
 
 class Type
@@ -20,21 +21,21 @@ class Type
     private array $acceptedTypes = [];
 
     public function __construct(
-        private null | ReflectionNamedType | ReflectionUnionType $type
+        private null | ReflectionType $reflectionType
     ) {
-        if ($type === null) {
+        if ($reflectionType === null) {
             $this->isNullable = true;
             $this->isMixed = true;
         }
 
-        if ($type instanceof ReflectionNamedType) {
-            $this->acceptedTypes = [$this->normalize($type->getName())];
-            $this->isNullable = $type->allowsNull();
-            $this->isMixed = $type->getName() === 'mixed';
+        if ($reflectionType instanceof ReflectionNamedType) {
+            $this->acceptedTypes = [$this->normalize($reflectionType->getName())];
+            $this->isNullable = $reflectionType->allowsNull();
+            $this->isMixed = $reflectionType->getName() === 'mixed';
         }
 
-        if ($type instanceof ReflectionUnionType) {
-            foreach ($type->getTypes() as $namedType) {
+        if ($reflectionType instanceof ReflectionUnionType) {
+            foreach ($reflectionType->getTypes() as $namedType) {
                 $this->acceptedTypes[] = $this->normalize($namedType->getName());
                 $this->isNullable = $this->isNullable || $namedType->allowsNull();
                 $this->isMixed = $namedType->getName() === 'mixed';
