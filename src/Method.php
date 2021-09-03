@@ -54,7 +54,7 @@ class Method
     {
         $modifiers = $this->reflectionMethod->getModifiers();
 
-        return match(true) {
+        return match (true) {
             ($modifiers & ReflectionMethod::IS_PRIVATE) !== 0 => self::PRIVATE,
             ($modifiers & ReflectionMethod::IS_PROTECTED) !== 0 => self::PROTECTED,
             default => self::PUBLIC,

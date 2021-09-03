@@ -23,7 +23,7 @@ class Handlers
         }
     }
 
-    public static function new(object|string $object): self
+    public static function new(object | string $object): self
     {
         return new self(
             $object instanceof ReflectionClass
