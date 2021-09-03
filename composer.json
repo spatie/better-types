@@ -16,6 +16,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "illuminate/collections": "^8.58",
         "symfony/polyfill-php81": "^1.23"
     },
     "require-dev": {

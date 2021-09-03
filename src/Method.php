@@ -2,6 +2,7 @@
 
 namespace Spatie\BetterTypes;
 
+use Illuminate\Support\Collection;
 use ReflectionMethod;
 
 class Method
@@ -19,7 +20,7 @@ class Method
     private int $inputCount;
 
     public function __construct(
-        public ReflectionMethod $reflectionMethod
+        private ReflectionMethod $reflectionMethod
     ) {
         foreach ($reflectionMethod->getParameters() as $index => $parameter) {
             $type = new Type($parameter->getType());
@@ -48,6 +49,16 @@ class Method
         }
 
         return true;
+    }
+
+    public function getName(): string
+    {
+        return $this->reflectionMethod->getName();
+    }
+
+    public function getTypes(): Collection
+    {
+        return collect($this->namedTypes);
     }
 
     public function visibility(): string

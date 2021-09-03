@@ -16,11 +16,11 @@ class HandlersTest extends TestCase
 
         $handlers = new Handlers($reflectionClass);
 
-        $this->assertEquals(['acceptsString', 'acceptsStringToo'], $handlers->accepts('string')->all());
-        $this->assertEquals(['acceptsStringToo'], $handlers->accepts(...['b' => 'string'])->all());
-        $this->assertEquals(['acceptsInt'], $handlers->accepts(1)->all());
+        $this->assertEquals(['acceptsString', 'acceptsStringToo'], $handlers->accepts('string')->all()->keys()->toArray());
+        $this->assertEquals(['acceptsStringToo'], $handlers->accepts(...['b' => 'string'])->all()->keys()->toArray());
+        $this->assertEquals(['acceptsInt'], $handlers->accepts(1)->all()->keys()->toArray());
         $this->assertEquals([], $handlers->accepts(new class() {
-        })->all());
+        })->all()->keys()->toArray());
     }
 
     /** @test */
@@ -30,8 +30,8 @@ class HandlersTest extends TestCase
 
         $handlers = new Handlers($reflectionClass);
 
-        $this->assertEquals('acceptsString', $handlers->accepts('string')->first());
-        $this->assertEquals('acceptsStringToo', $handlers->accepts(...['b' => 'string'])->first());
+        $this->assertEquals('acceptsString', $handlers->accepts('string')->first()->getName());
+        $this->assertEquals('acceptsStringToo', $handlers->accepts(...['b' => 'string'])->first()->getName());
         $this->assertEquals(null, $handlers->accepts(new class() {
         })->first());
     }

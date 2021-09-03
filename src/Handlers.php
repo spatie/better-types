@@ -3,7 +3,9 @@
 namespace Spatie\BetterTypes;
 
 use Closure;
+use Illuminate\Support\Collection;
 use ReflectionClass;
+use ReflectionMethod;
 
 class Handlers
 {
@@ -32,7 +34,7 @@ class Handlers
         );
     }
 
-    public function all(): array
+    public function all(): Collection
     {
         $allMethods = [];
 
@@ -41,15 +43,15 @@ class Handlers
                 continue;
             }
 
-            $allMethods[] = $name;
+            $allMethods[$name] = $method;
         }
 
-        return $allMethods;
+        return collect($allMethods);
     }
 
-    public function first(): ?string
+    public function first(): ?Method
     {
-        return $this->all()[0] ?? null;
+        return $this->all()->first();
     }
 
     public function filter(Closure $filter): self
