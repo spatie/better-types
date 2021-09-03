@@ -102,6 +102,14 @@ class TypeTest extends TestCase
         $this->assertFalse($this->makeType($type)->accepts($input));
     }
 
+    /** @test */
+    public function test_get_name()
+    {
+        $this->assertEquals('string|int', $this->makeType('string|int')->getName());
+        $this->assertEquals('int', $this->makeType('int')->getName());
+        $this->assertEquals(Foo::class, $this->makeType(Foo::class)->getName());
+    }
+
     private function makeType(string $definition): ?Type
     {
         eval(<<<PHP

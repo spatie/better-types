@@ -20,6 +20,8 @@ class Type
 
     private array $acceptedTypes = [];
 
+    private string $name = '';
+
     public function __construct(
         private null | ReflectionType $reflectionType
     ) {
@@ -32,15 +34,26 @@ class Type
             $this->acceptedTypes = [$this->normalize($reflectionType->getName())];
             $this->isNullable = $reflectionType->allowsNull();
             $this->isMixed = $reflectionType->getName() === 'mixed';
+            $this->name = $reflectionType->getName();
         }
 
         if ($reflectionType instanceof ReflectionUnionType) {
+            $names = [];
+
             foreach ($reflectionType->getTypes() as $namedType) {
                 $this->acceptedTypes[] = $this->normalize($namedType->getName());
                 $this->isNullable = $this->isNullable || $namedType->allowsNull();
                 $this->isMixed = $namedType->getName() === 'mixed';
+                $names[] = $namedType->getName();
             }
+
+            $this->name = implode('|', $names);
         }
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     public function accepts(mixed $input): bool
