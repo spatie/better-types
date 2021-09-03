@@ -36,6 +36,24 @@ $method->accepts('string', 1); // false
 $method->accepts(new Foo()); // false, you can't omit values
 ```
 
+```php
+class Foo
+{
+    public function acceptsString(string $a) {}
+    
+    public function acceptsStringToo(string $a) {}
+    
+    public function acceptsInt(int $a) {}
+}
+
+$reflectionClass = …
+
+$handlers = new Handlers($reflectionClass);
+
+$handlers->find('string'); // ['acceptsString', 'acceptsStringToo']
+$handlers->find(1); // ['acceptsInt']
+```
+
 ## Support us
 
 [<img src="https://github-ads.s3.eu-central-1.amazonaws.com/better-types.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/better-types)
