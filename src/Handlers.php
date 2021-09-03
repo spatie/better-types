@@ -41,65 +41,61 @@ class Handlers
                 continue;
             }
 
-            $allMethods[$name] = $method;
+            $allMethods[] = $name;
         }
 
         return $allMethods;
     }
 
-    public function find(mixed ...$input): array
+    public function first(): ?string
     {
-        $viableMethods = [];
-
-        foreach ($this->all() as $name => $method) {
-            if (! $method->accepts(...$input)) {
-                continue;
-            }
-
-            $viableMethods[] = $name;
-        }
-
-        return $viableMethods;
+        return $this->all()[0] ?? null;
     }
 
     public function filter(Closure $filter): self
     {
-        $this->filters[] = $filter;
+        $clone = clone $this;
 
-        return $this;
+        $clone->filters[] = $filter;
+
+        return $clone;
     }
 
     public function reject(Closure $reject): self
     {
-        $this->filters[] = fn (Method $method) => ! $reject($method);
-
-        return $this;
+        return $this->filter(fn (Method $method) => ! $reject($method));
     }
 
-    public function first(mixed ...$input): ?string
+    public function accepts(mixed ...$input): self
     {
-        return $this->find(...$input)[0] ?? null;
+        return $this->filter(fn (Method $method) => $method->accepts(...$input));
     }
 
     public function public(): self
     {
-        $this->visibilityFilter[] = Method::PUBLIC;
+        $clone = clone $this;
 
-        return $this;
+        $clone->visibilityFilter[] = Method::PUBLIC;
+
+        return $clone;
     }
 
     public function protected(): self
     {
-        $this->visibilityFilter[] = Method::PROTECTED;
+        $clone = clone $this;
 
-        return $this;
+        $clone->visibilityFilter[] = Method::PROTECTED;
+
+        return $clone;
     }
 
     public function private(): self
     {
-        $this->visibilityFilter[] = Method::PRIVATE;
+        $clone = clone $this;
 
-        return $this;
+        $clone->visibilityFilter[] = Method::PRIVATE;
+
+        return $clone;
     }
 
     private function filterAllows(Method $method): bool

@@ -16,10 +16,11 @@ class HandlersTest extends TestCase
 
         $handlers = new Handlers($reflectionClass);
 
-        $this->assertEquals(['acceptsString', 'acceptsStringToo'], $handlers->find('string'));
-        $this->assertEquals(['acceptsStringToo'], $handlers->find(...['b' => 'string']));
-        $this->assertEquals(['acceptsInt'], $handlers->find(1));
-        $this->assertEquals([], $handlers->find(new class() {}));
+        $this->assertEquals(['acceptsString', 'acceptsStringToo'], $handlers->accepts('string')->all());
+        $this->assertEquals(['acceptsStringToo'], $handlers->accepts(...['b' => 'string'])->all());
+        $this->assertEquals(['acceptsInt'], $handlers->accepts(1)->all());
+        $this->assertEquals([], $handlers->accepts(new class() {
+        })->all());
     }
 
     /** @test */
@@ -29,18 +30,19 @@ class HandlersTest extends TestCase
 
         $handlers = new Handlers($reflectionClass);
 
-        $this->assertEquals('acceptsString', $handlers->first('string'));
-        $this->assertEquals('acceptsStringToo', $handlers->first(...['b' => 'string']));
-        $this->assertEquals(null, $handlers->first(new class() {}));
+        $this->assertEquals('acceptsString', $handlers->accepts('string')->first());
+        $this->assertEquals('acceptsStringToo', $handlers->accepts(...['b' => 'string'])->first());
+        $this->assertEquals(null, $handlers->accepts(new class() {
+        })->first());
     }
 
     /** @test */
     public function test_visibility()
     {
-        $this->assertNull(Handlers::new(Baz::class)->public()->first([]));
-        $this->assertNull(Handlers::new(Baz::class)->protected()->first([]));
-        $this->assertNotNull(Handlers::new(Baz::class)->private()->first([]));
-        $this->assertNotNull(Handlers::new(Baz::class)->public()->protected()->private()->first([]));
+        $this->assertNull(Handlers::new(Baz::class)->public()->accepts([])->first());
+        $this->assertNull(Handlers::new(Baz::class)->protected()->accepts([])->first());
+        $this->assertNotNull(Handlers::new(Baz::class)->private()->accepts([])->first());
+        $this->assertNotNull(Handlers::new(Baz::class)->public()->protected()->private()->accepts([])->first());
     }
 
     /** @test */
@@ -58,14 +60,16 @@ class HandlersTest extends TestCase
         $this->assertNull(
             Handlers::new(Baz::class)
                 ->filter(fn (Method $method) => ! $method->isFinal())
-                ->first(0.1)
-            );
+                ->accepts(0.1)
+                ->first()
+        );
 
         $this->assertNotNull(
             Handlers::new(Baz::class)
                 ->filter(fn (Method $method) => $method->isFinal())
-                ->first(0.1)
-            );
+                ->accepts(0.1)
+                ->first()
+        );
     }
 
     /** @test */
@@ -74,14 +78,16 @@ class HandlersTest extends TestCase
         $this->assertNull(
             Handlers::new(Baz::class)
                 ->reject(fn (Method $method) => $method->isFinal())
-                ->first(0.1)
-            );
+                ->accepts(0.1)
+                ->first()
+        );
 
         $this->assertNotNull(
             Handlers::new(Baz::class)
                 ->reject(fn (Method $method) => ! $method->isFinal())
-                ->first(0.1)
-            );
+                ->accepts(0.1)
+                ->first()
+        );
     }
 }
 
@@ -99,7 +105,11 @@ class Baz
     {
     }
 
-    private function invisible(array $input) {}
+    private function invisible(array $input)
+    {
+    }
 
-    final protected function finalFunction(float $float) {}
+    final protected function finalFunction(float $float)
+    {
+    }
 }
