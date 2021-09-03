@@ -29,4 +29,9 @@ class Handlers
 
         return $viableMethods;
     }
+
+    public function first(mixed ...$input): ?string
+    {
+        return $this->find(...$input)[0] ?? null;
+    }
 }
