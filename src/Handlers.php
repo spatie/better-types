@@ -32,25 +32,31 @@ class Handlers
         );
     }
 
+    public function all(): array
+    {
+        $allMethods = [];
+
+        foreach ($this->methods as $name => $method) {
+            if (! $this->filterAllows($method)) {
+                continue;
+            }
+
+            $allMethods[$name] = $method;
+        }
+
+        return $allMethods;
+    }
+
     public function find(mixed ...$input): array
     {
         $viableMethods = [];
 
-        foreach ($this->methods as $name => $method) {
-            if (
-                $this->visibilityFilter !== []
-                && ! in_array($method->visibility(), $this->visibilityFilter)
-            ) {
+        foreach ($this->all() as $name => $method) {
+            if (! $method->accepts(...$input)) {
                 continue;
             }
 
-            if ($this->filterRejects($method)) {
-                continue;
-            }
-
-            if ($method->accepts(...$input)) {
-                $viableMethods[] = $name;
-            }
+            $viableMethods[] = $name;
         }
 
         return $viableMethods;
@@ -96,14 +102,21 @@ class Handlers
         return $this;
     }
 
-    private function filterRejects(Method $method): bool
+    private function filterAllows(Method $method): bool
     {
+        if (
+            $this->visibilityFilter !== []
+            && ! in_array($method->visibility(), $this->visibilityFilter)
+        ) {
+            return false;
+        }
+
         foreach ($this->filters as $filter) {
             if ($filter($method) === false) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }

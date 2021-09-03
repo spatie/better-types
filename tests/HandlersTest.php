@@ -44,6 +44,15 @@ class HandlersTest extends TestCase
     }
 
     /** @test */
+    public function test_all()
+    {
+        $this->assertCount(1, Handlers::new(Baz::class)->private()->all());
+        $this->assertCount(3, Handlers::new(Baz::class)->public()->all());
+        $this->assertCount(5, Handlers::new(Baz::class)->all());
+        $this->assertCount(1, Handlers::new(Baz::class)->filter(fn (Method $method) => $method->isFinal())->all());
+    }
+
+    /** @test */
     public function test_filter()
     {
         $this->assertNull(
