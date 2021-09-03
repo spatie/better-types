@@ -1,4 +1,6 @@
-# This is my package BetterTypes
+# Better types
+
+Check whether a reflection type or method accepts a given input
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/better-types.svg?style=flat-square)](https://packagist.org/packages/spatie/better-types)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/better-types/run-tests?label=tests)](https://github.com/spatie/better-types/actions?query=workflow%3ATests+branch%3Amaster)
@@ -6,23 +8,32 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/better-types.svg?style=flat-square)](https://packagist.org/packages/spatie/better-types)
 
 ---
-This package can be used as to scaffold a framework agnostic package. Follow these steps to get started:
-
-1. Press the "Use template" button at the top of this repo to create a new repo with the contents of this better-types
-2. Run "./configure.sh" to run a script that will replace all placeholders throughout all the files
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-
 
 ```php
-$reflectionType = …;
+function (FooInterface $foo) {}
 
-$input = new Foo();
-// $input = '';
-// $input = 1.1;
+$reflectionType = …
 
-// Does this type accept $input?
+$type = new Type($reflectionType);
+
+$type->accepts(new Foo()); // true
+$type->accepts('invalid string'); // false
+```
+
+```php
+function (?FooInterface $foo, ?BarInterface $bar) {}
+
+$reflectionMethod = …
+
+$method = new Method($reflectionMethod);
+
+$method->accepts(new Foo(), new Bar()); // true
+$method->accepts(bar: new Bar() foo: new Foo()); // true
+$method->accepts(null, new Bar()); // true
+$method->accepts(null, null); // true
+
+$method->accepts('string', 1); // false
+$method->accepts(new Foo()); // false, you can't omit values
 ```
 
 ## Support us
