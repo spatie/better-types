@@ -103,7 +103,7 @@ class Handlers
     {
         if (
             $this->visibilityFilter !== []
-            && ! in_array($method->visibility(), $this->visibilityFilter)
+            && ! in_array($method->visibility(), $this->visibilityFilter, true)
         ) {
             return false;
         }

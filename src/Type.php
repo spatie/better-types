@@ -68,7 +68,7 @@ class Type
 
         $inputType = $this->normalize(gettype($input));
 
-        if (in_array($inputType, $this->acceptedTypes)) {
+        if (in_array($inputType, $this->acceptedTypes, true)) {
             return true;
         }
 

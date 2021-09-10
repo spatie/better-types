@@ -57,7 +57,7 @@ class MethodTest extends TestCase
      */
     public function test_true($definition, array $arguments)
     {
-        $this->assertTrue($this->makeMethod($definition)->accepts(...$arguments));
+        self::assertTrue($this->makeMethod($definition)->accepts(...$arguments));
     }
 
     /**
@@ -66,7 +66,7 @@ class MethodTest extends TestCase
      */
     public function test_false($definition, array $arguments)
     {
-        $this->assertFalse($this->makeMethod($definition)->accepts(...$arguments));
+        self::assertFalse($this->makeMethod($definition)->accepts(...$arguments));
     }
 
     private function makeMethod(string $definition): Method
@@ -77,6 +77,7 @@ class MethodTest extends TestCase
         };
         PHP);
 
+        // @phpstan-ignore-next-line
         $method = (new ReflectionClass($class))->getMethod('test');
 
         return new Method($method);

@@ -90,7 +90,7 @@ class TypeTest extends TestCase
             $inputAsString = (string) $input;
         }
 
-        $this->assertTrue($this->makeType($type)->accepts($input), "{$type} for input {$inputAsString} failed");
+        self::assertTrue($this->makeType($type)->accepts($input), "{$type} for input {$inputAsString} failed");
     }
 
     /**
@@ -99,15 +99,15 @@ class TypeTest extends TestCase
      */
     public function test_false($type, $input)
     {
-        $this->assertFalse($this->makeType($type)->accepts($input));
+        self::assertFalse($this->makeType($type)->accepts($input));
     }
 
     /** @test */
     public function test_get_name()
     {
-        $this->assertEquals('string|int', $this->makeType('string|int')->getName());
-        $this->assertEquals('int', $this->makeType('int')->getName());
-        $this->assertEquals(Foo::class, $this->makeType(Foo::class)->getName());
+        self::assertEquals('string|int', $this->makeType('string|int')->getName());
+        self::assertEquals('int', $this->makeType('int')->getName());
+        self::assertEquals(Foo::class, $this->makeType(Foo::class)->getName());
     }
 
     private function makeType(string $definition): ?Type
@@ -118,6 +118,7 @@ class TypeTest extends TestCase
         };
         PHP);
 
+        // @phpstan-ignore-next-line
         $parameter = (new ReflectionClass($class))->getMethod('test')->getParameters()[0] ?? null;
 
         return new Type($parameter?->getType());

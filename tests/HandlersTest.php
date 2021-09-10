@@ -16,10 +16,10 @@ class HandlersTest extends TestCase
 
         $handlers = new Handlers($reflectionClass);
 
-        $this->assertEquals(['acceptsString', 'acceptsStringToo'], $handlers->accepts('string')->all()->keys()->toArray());
-        $this->assertEquals(['acceptsStringToo'], $handlers->accepts(...['b' => 'string'])->all()->keys()->toArray());
-        $this->assertEquals(['acceptsInt'], $handlers->accepts(1)->all()->keys()->toArray());
-        $this->assertEquals([], $handlers->accepts(new class() {
+        self::assertEquals(['acceptsString', 'acceptsStringToo'], $handlers->accepts('string')->all()->keys()->toArray());
+        self::assertEquals(['acceptsStringToo'], $handlers->accepts(...['b' => 'string'])->all()->keys()->toArray());
+        self::assertEquals(['acceptsInt'], $handlers->accepts(1)->all()->keys()->toArray());
+        self::assertEquals([], $handlers->accepts(new class() {
         })->all()->keys()->toArray());
     }
 
@@ -30,41 +30,41 @@ class HandlersTest extends TestCase
 
         $handlers = new Handlers($reflectionClass);
 
-        $this->assertEquals('acceptsString', $handlers->accepts('string')->first()->getName());
-        $this->assertEquals('acceptsStringToo', $handlers->accepts(...['b' => 'string'])->first()->getName());
-        $this->assertEquals(null, $handlers->accepts(new class() {
+        self::assertEquals('acceptsString', $handlers->accepts('string')->first()->getName());
+        self::assertEquals('acceptsStringToo', $handlers->accepts(...['b' => 'string'])->first()->getName());
+        self::assertEquals(null, $handlers->accepts(new class() {
         })->first());
     }
 
     /** @test */
     public function test_visibility()
     {
-        $this->assertNull(Handlers::new(Baz::class)->public()->accepts([])->first());
-        $this->assertNull(Handlers::new(Baz::class)->protected()->accepts([])->first());
-        $this->assertNotNull(Handlers::new(Baz::class)->private()->accepts([])->first());
-        $this->assertNotNull(Handlers::new(Baz::class)->public()->protected()->private()->accepts([])->first());
+        self::assertNull(Handlers::new(Baz::class)->public()->accepts([])->first());
+        self::assertNull(Handlers::new(Baz::class)->protected()->accepts([])->first());
+        self::assertNotNull(Handlers::new(Baz::class)->private()->accepts([])->first());
+        self::assertNotNull(Handlers::new(Baz::class)->public()->protected()->private()->accepts([])->first());
     }
 
     /** @test */
     public function test_all()
     {
-        $this->assertCount(1, Handlers::new(Baz::class)->private()->all());
-        $this->assertCount(3, Handlers::new(Baz::class)->public()->all());
-        $this->assertCount(5, Handlers::new(Baz::class)->all());
-        $this->assertCount(1, Handlers::new(Baz::class)->filter(fn (Method $method) => $method->isFinal())->all());
+        self::assertCount(1, Handlers::new(Baz::class)->private()->all());
+        self::assertCount(3, Handlers::new(Baz::class)->public()->all());
+        self::assertCount(5, Handlers::new(Baz::class)->all());
+        self::assertCount(1, Handlers::new(Baz::class)->filter(fn (Method $method) => $method->isFinal())->all());
     }
 
     /** @test */
     public function test_filter()
     {
-        $this->assertNull(
+        self::assertNull(
             Handlers::new(Baz::class)
                 ->filter(fn (Method $method) => ! $method->isFinal())
                 ->accepts(0.1)
                 ->first()
         );
 
-        $this->assertNotNull(
+        self::assertNotNull(
             Handlers::new(Baz::class)
                 ->filter(fn (Method $method) => $method->isFinal())
                 ->accepts(0.1)
@@ -75,14 +75,14 @@ class HandlersTest extends TestCase
     /** @test */
     public function test_reject()
     {
-        $this->assertNull(
+        self::assertNull(
             Handlers::new(Baz::class)
                 ->reject(fn (Method $method) => $method->isFinal())
                 ->accepts(0.1)
                 ->first()
         );
 
-        $this->assertNotNull(
+        self::assertNotNull(
             Handlers::new(Baz::class)
                 ->reject(fn (Method $method) => ! $method->isFinal())
                 ->accepts(0.1)
