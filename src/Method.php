@@ -74,31 +74,31 @@ class Method
 
     public function isStatic(): bool
     {
-        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_STATIC;
+        return (bool) ($this->reflectionMethod->getModifiers() & ReflectionMethod::IS_STATIC);
     }
 
     public function isFinal(): bool
     {
-        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_FINAL;
+        return (bool) ($this->reflectionMethod->getModifiers() & ReflectionMethod::IS_FINAL);
     }
 
     public function isAbstract(): bool
     {
-        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_ABSTRACT;
+        return (bool) ($this->reflectionMethod->getModifiers() & ReflectionMethod::IS_ABSTRACT);
     }
 
     public function isPublic(): bool
     {
-        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PUBLIC;
+        return (bool) ($this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PUBLIC);
     }
 
     public function isProtected(): bool
     {
-        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PROTECTED;
+        return (bool) ($this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PROTECTED);
     }
 
     public function isPrivate(): bool
     {
-        return $this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PRIVATE;
+        return (bool) ($this->reflectionMethod->getModifiers() & ReflectionMethod::IS_PRIVATE);
     }
 }
