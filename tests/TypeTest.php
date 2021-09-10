@@ -13,11 +13,18 @@ class TypeTest extends TestCase
     private int $integer = 1;
     private float $float = 1.2;
     private string $string = 'string';
+    // @phpstan-ignore-next-line
     private array $array = [];
     private object $object;
+    /**
+     * @var null $null
+     */
     private $null = null;
     private Foo $foo;
 
+    /**
+     * @return Generator<array{0: string, 1: mixed}>
+     */
     public function trueValues(): Generator
     {
         $this->object = (object) [];
@@ -68,6 +75,9 @@ class TypeTest extends TestCase
         yield [Foo::class, $this->foo];
     }
 
+    /**
+     * @return Generator<array{0: string, 1: mixed}>
+     */
     public function falseValues(): Generator
     {
         yield ['string|int', []];
@@ -77,10 +87,9 @@ class TypeTest extends TestCase
     }
 
     /**
-     * @test
      * @dataProvider trueValues
      */
-    public function test_true($type, $input)
+    public function test_true(string $type, mixed $input): void
     {
         if (is_object($input)) {
             $inputAsString = $input::class;
@@ -94,16 +103,14 @@ class TypeTest extends TestCase
     }
 
     /**
-     * @test
      * @dataProvider falseValues
      */
-    public function test_false($type, $input)
+    public function test_false(string $type, mixed $input): void
     {
         self::assertFalse($this->makeType($type)->accepts($input));
     }
 
-    /** @test */
-    public function test_get_name()
+    public function test_get_name(): void
     {
         self::assertEquals('string|int', $this->makeType('string|int')->getName());
         self::assertEquals('int', $this->makeType('int')->getName());

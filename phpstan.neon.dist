@@ -1,6 +1,8 @@
 parameters:
-    level: 4
+    level: 6
     paths:
         - src
         - tests
     tmpDir: build/phpstan
+
+    checkGenericClassInNonGenericObjectType: false

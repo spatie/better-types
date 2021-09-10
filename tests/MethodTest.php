@@ -15,10 +15,16 @@ class MethodTest extends TestCase
 
     private object $object;
 
+    /**
+     * @var null $null
+     */
     private $null = null;
 
     private Bar $bar;
 
+    /**
+     * @return Generator<array{0: string, 1: array}>
+     */
     public function trueValues(): Generator
     {
         $this->object = (object) [];
@@ -38,6 +44,9 @@ class MethodTest extends TestCase
         yield ['\Spatie\BetterTypes\Tests\Bar $a, Spatie\BetterTypes\Tests\BarInterface $b', [$this->bar, $this->bar]];
     }
 
+    /**
+     * @return Generator<array{0: string, 1: array}>
+     */
     public function falseValues(): Generator
     {
         $this->object = (object) [];
@@ -52,19 +61,21 @@ class MethodTest extends TestCase
     }
 
     /**
-     * @test
      * @dataProvider trueValues
+     *
+     * @param array<mixed> $arguments
      */
-    public function test_true($definition, array $arguments)
+    public function test_true(string $definition, array $arguments): void
     {
         self::assertTrue($this->makeMethod($definition)->accepts(...$arguments));
     }
 
     /**
-     * @test
      * @dataProvider falseValues
+     *
+     * @param array<mixed> $arguments
      */
-    public function test_false($definition, array $arguments)
+    public function test_false(string $definition, array $arguments): void
     {
         self::assertFalse($this->makeMethod($definition)->accepts(...$arguments));
     }

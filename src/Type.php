@@ -8,7 +8,10 @@ use ReflectionUnionType;
 
 class Type
 {
-    private static $typeMapping = [
+    /**
+     * @var array<string, string>
+     */
+    private static array $typeMapping = [
         'double' => 'float',
         'int' => 'integer',
         'bool' => 'boolean',
@@ -18,6 +21,9 @@ class Type
 
     private bool $isMixed = false;
 
+    /**
+     * @var array<string | null>
+     */
     private array $acceptedTypes = [];
 
     private string $name = '';

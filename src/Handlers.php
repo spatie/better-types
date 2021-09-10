@@ -11,6 +11,7 @@ class Handlers
     /** @var \Spatie\BetterTypes\Method[] */
     private array $methods = [];
 
+    /** @var string[] */
     private array $visibilityFilter = [];
 
     /** @var Closure[] */
@@ -33,6 +34,9 @@ class Handlers
         );
     }
 
+    /**
+     * @return Collection<string, Method>
+     */
     public function all(): Collection
     {
         $allMethods = [];

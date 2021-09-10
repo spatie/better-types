@@ -9,8 +9,7 @@ use Spatie\BetterTypes\Method;
 
 class HandlersTest extends TestCase
 {
-    /** @test */
-    public function test_find()
+    public function test_find(): void
     {
         $reflectionClass = new ReflectionClass(new Baz());
 
@@ -23,8 +22,7 @@ class HandlersTest extends TestCase
         })->all()->keys()->toArray());
     }
 
-    /** @test */
-    public function test_first()
+    public function test_first(): void
     {
         $reflectionClass = new ReflectionClass(new Baz());
 
@@ -36,8 +34,7 @@ class HandlersTest extends TestCase
         })->first());
     }
 
-    /** @test */
-    public function test_visibility()
+    public function test_visibility(): void
     {
         self::assertNull(Handlers::new(Baz::class)->public()->accepts([])->first());
         self::assertNull(Handlers::new(Baz::class)->protected()->accepts([])->first());
@@ -45,8 +42,7 @@ class HandlersTest extends TestCase
         self::assertNotNull(Handlers::new(Baz::class)->public()->protected()->private()->accepts([])->first());
     }
 
-    /** @test */
-    public function test_all()
+    public function test_all(): void
     {
         self::assertCount(1, Handlers::new(Baz::class)->private()->all());
         self::assertCount(3, Handlers::new(Baz::class)->public()->all());
@@ -54,8 +50,7 @@ class HandlersTest extends TestCase
         self::assertCount(1, Handlers::new(Baz::class)->filter(fn (Method $method) => $method->isFinal())->all());
     }
 
-    /** @test */
-    public function test_filter()
+    public function test_filter(): void
     {
         self::assertNull(
             Handlers::new(Baz::class)
@@ -72,8 +67,7 @@ class HandlersTest extends TestCase
         );
     }
 
-    /** @test */
-    public function test_reject()
+    public function test_reject(): void
     {
         self::assertNull(
             Handlers::new(Baz::class)
@@ -93,23 +87,24 @@ class HandlersTest extends TestCase
 
 class Baz
 {
-    public function acceptsString(string $a)
+    public function acceptsString(string $a): void
     {
     }
 
-    public function acceptsStringToo(string $b)
+    public function acceptsStringToo(string $b): void
     {
     }
 
-    public function acceptsInt(int $a)
+    public function acceptsInt(int $a): void
     {
     }
 
-    private function invisible(array $input)
+    // @phpstan-ignore-next-line
+    private function invisible(array $input): void
     {
     }
 
-    final protected function finalFunction(float $float)
+    final protected function finalFunction(float $float): void
     {
     }
 }

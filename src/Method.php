@@ -56,6 +56,9 @@ class Method
         return $this->reflectionMethod->getName();
     }
 
+    /**
+     * @return Collection<string, Type>
+     */
     public function getTypes(): Collection
     {
         return collect($this->namedTypes);
