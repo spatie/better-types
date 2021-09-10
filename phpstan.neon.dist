@@ -4,5 +4,3 @@ parameters:
         - src
         - tests
     tmpDir: build/phpstan
-
-    checkGenericClassInNonGenericObjectType: false
