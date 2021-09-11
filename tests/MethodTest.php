@@ -16,7 +16,7 @@ class MethodTest extends TestCase
     private object $object;
 
     /**
-     * @var null $null
+     * @var null
      */
     private $null = null;
 

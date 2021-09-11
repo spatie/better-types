@@ -17,7 +17,7 @@ class TypeTest extends TestCase
     private array $array = [];
     private object $object;
     /**
-     * @var null $null
+     * @var null
      */
     private $null = null;
     private Foo $foo;
