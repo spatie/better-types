@@ -2,19 +2,18 @@
 
 namespace Spatie\BetterTypes;
 
-use Closure;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 
 class Handlers
 {
-    /** @var \Spatie\BetterTypes\Method[] */
+    /** @var array<string, Method> */
     private array $methods = [];
 
     /** @var string[] */
     private array $visibilityFilter = [];
 
-    /** @var Closure[] */
+    /** @var callable[] */
     private array $filters = [];
 
     /**
@@ -68,9 +67,9 @@ class Handlers
     }
 
     /**
-     * @param Closure(Method): bool $filter
+     * @param callable(Method): bool $filter
      */
-    public function filter(Closure $filter): self
+    public function filter(callable $filter): self
     {
         $clone = clone $this;
 
@@ -80,9 +79,9 @@ class Handlers
     }
 
     /**
-     * @param Closure(Method): bool $reject
+     * @param callable(Method): bool $reject
      */
-    public function reject(Closure $reject): self
+    public function reject(callable $reject): self
     {
         return $this->filter(fn (Method $method) => ! $reject($method));
     }

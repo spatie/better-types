@@ -86,8 +86,8 @@ class Type
             foreach ($this->acceptedTypes as $acceptedType) {
                 $extendsOrIs =
                     $input::class === $acceptedType
-                    || array_key_exists($acceptedType, $interfaces)
-                    || array_key_exists($acceptedType, $parents);
+                    || array_key_exists((string) $acceptedType, $interfaces)
+                    || array_key_exists((string) $acceptedType, $parents);
 
                 if ($extendsOrIs) {
                     return true;

@@ -28,8 +28,8 @@ class HandlersTest extends TestCase
 
         $handlers = new Handlers($reflectionClass);
 
-        self::assertEquals('acceptsString', $handlers->accepts('string')->first()->getName());
-        self::assertEquals('acceptsStringToo', $handlers->accepts(...['b' => 'string'])->first()->getName());
+        self::assertEquals('acceptsString', $handlers->accepts('string')->first()?->getName());
+        self::assertEquals('acceptsStringToo', $handlers->accepts(...['b' => 'string'])->first()?->getName());
         self::assertEquals(null, $handlers->accepts(new class() {
         })->first());
     }
