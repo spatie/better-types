@@ -79,9 +79,9 @@ class Type
         }
 
         if ($inputType === 'object') {
-            $interfaces = class_implements($input);
+            $interfaces = (array) class_implements($input);
 
-            $parents = class_parents($input);
+            $parents = (array) class_parents($input);
 
             foreach ($this->acceptedTypes as $acceptedType) {
                 $extendsOrIs =

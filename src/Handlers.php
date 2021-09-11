@@ -6,9 +6,6 @@ use Closure;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 
-/**
- * @template-covariant T of object
- */
 class Handlers
 {
     /** @var \Spatie\BetterTypes\Method[] */
@@ -21,7 +18,11 @@ class Handlers
     private array $filters = [];
 
     /**
+     * @template-covariant T of object
+     *
      * @param ReflectionClass<T> $class
+     *
+     * @phpstan-ignore-next-line
      */
     public function __construct(
         private ReflectionClass $class
@@ -33,7 +34,6 @@ class Handlers
 
     /**
      * @param object|class-string $object
-     * @return self<T>
      */
     public static function new(object | string $object): self
     {
@@ -69,7 +69,6 @@ class Handlers
 
     /**
      * @param Closure(Method): bool $filter
-     * @return self<T>
      */
     public function filter(Closure $filter): self
     {
@@ -82,24 +81,17 @@ class Handlers
 
     /**
      * @param Closure(Method): bool $reject
-     * @return self<T>
      */
     public function reject(Closure $reject): self
     {
         return $this->filter(fn (Method $method) => ! $reject($method));
     }
 
-    /**
-     * @return self<T>
-     */
     public function accepts(mixed ...$input): self
     {
         return $this->filter(fn (Method $method) => $method->accepts(...$input));
     }
 
-    /**
-     * @return self<T>
-     */
     public function public(): self
     {
         $clone = clone $this;
@@ -109,9 +101,6 @@ class Handlers
         return $clone;
     }
 
-    /**
-     * @return self<T>
-     */
     public function protected(): self
     {
         $clone = clone $this;
@@ -121,9 +110,6 @@ class Handlers
         return $clone;
     }
 
-    /**
-     * @return self<T>
-     */
     public function private(): self
     {
         $clone = clone $this;
