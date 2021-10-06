@@ -16,14 +16,10 @@ class Attributes
 {
     private ?string $instanceOf = null;
 
+    /** @var Closure[] */
     private array $filters = [];
 
     private bool $asAttributes = false;
-
-    public function __construct(
-        private ReflectionClass | ReflectionMethod $reflection
-    ) {
-    }
 
     public static function new(array|string|object $reflection): self
     {
@@ -40,6 +36,11 @@ class Attributes
         }
 
         return new self($reflection);
+    }
+
+    public function __construct(
+        private ReflectionClass | ReflectionMethod $reflection
+    ) {
     }
 
     /**

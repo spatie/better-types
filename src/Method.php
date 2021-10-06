@@ -63,11 +63,9 @@ class Method
 
     public function visibility(): string
     {
-        $modifiers = $this->reflectionMethod->getModifiers();
-
         return match (true) {
-            ($modifiers & ReflectionMethod::IS_PRIVATE) !== 0 => self::PRIVATE,
-            ($modifiers & ReflectionMethod::IS_PROTECTED) !== 0 => self::PROTECTED,
+            $this->isPrivate() => self::PRIVATE,
+            $this->isProtected() => self::PROTECTED,
             default => self::PUBLIC,
         };
     }

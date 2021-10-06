@@ -3,6 +3,7 @@
 namespace Spatie\BetterTypes;
 
 use ReflectionNamedType;
+use ReflectionParameter;
 use ReflectionType;
 use ReflectionUnionType;
 
@@ -22,8 +23,17 @@ class Type
 
     private string $name = '';
 
+    public static function new(null|ReflectionType|ReflectionParameter $reflection): self
+    {
+        if ($reflection instanceof ReflectionParameter) {
+            $reflection = $reflection->getType();
+        }
+
+        return new self($reflection);
+    }
+
     public function __construct(
-        private null | ReflectionType $reflectionType
+        private null|ReflectionType $reflectionType
     ) {
         if ($reflectionType === null) {
             $this->isNullable = true;

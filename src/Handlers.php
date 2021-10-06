@@ -16,14 +16,6 @@ class Handlers
     /** @var Closure[] */
     private array $filters = [];
 
-    public function __construct(
-        private ReflectionClass $class
-    ) {
-        foreach ($class->getMethods() as $reflectionMethod) {
-            $this->methods[$reflectionMethod->getName()] = new Method($reflectionMethod);
-        }
-    }
-
     public static function new(object|string $object): self
     {
         return new self(
@@ -33,7 +25,18 @@ class Handlers
         );
     }
 
-    public function all(): Collection
+    public function __construct(
+        private ReflectionClass $class
+    ) {
+        foreach ($class->getMethods() as $reflectionMethod) {
+            $this->methods[$reflectionMethod->getName()] = new Method($reflectionMethod);
+        }
+    }
+
+    /**
+     * @return iterable<\Spatie\BetterTypes\Method>|\Illuminate\Support\Collection
+     */
+    public function all(): iterable|Collection
     {
         $allMethods = [];
 
@@ -53,6 +56,11 @@ class Handlers
         return $this->all()->first();
     }
 
+    /**
+     * @param Closure(\Spatie\BetterTypes\Method): bool $filter
+     *
+     * @return self
+     */
     public function filter(Closure $filter): self
     {
         $clone = clone $this;
@@ -62,6 +70,11 @@ class Handlers
         return $clone;
     }
 
+    /**
+     * @param Closure(\Spatie\BetterTypes\Method): bool $reject
+     *
+     * @return self
+     */
     public function reject(Closure $reject): self
     {
         return $this->filter(fn (Method $method) => ! $reject($method));
