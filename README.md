@@ -54,6 +54,12 @@ $handlers->accepts('string')->all(); // ['acceptsString', 'acceptsStringToo']
 $handlers->accepts(1)->first(); // 'acceptsInt'
 ```
 
+```php
+Attributes::new(AttributesTestClass::class)
+    ->instanceOf(AttributesTestAttribute::class)
+    ->first();
+```
+
 ## Support us
 
 [<img src="https://github-ads.s3.eu-central-1.amazonaws.com/better-types.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/better-types)
