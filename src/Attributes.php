@@ -21,7 +21,7 @@ class Attributes
     private bool $asAttributes = false;
 
     public function __construct(
-        private ReflectionClass|ReflectionMethod $reflection
+        private ReflectionClass | ReflectionMethod $reflection
     ) {
     }
 

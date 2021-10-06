@@ -145,7 +145,6 @@ class AttributesTestClass
     #[AttributesTestMethodAttribute]
     public function test()
     {
-
     }
 }
 
