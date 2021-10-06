@@ -110,7 +110,7 @@ class TypeTest extends TestCase
         $this->assertEquals(Foo::class, $this->makeType(Foo::class)->getName());
     }
 
-    private function makeType(string $definition): ?Type
+    private function makeType(string $definition): Type
     {
         eval(<<<PHP
         \$class = new class() {
@@ -118,6 +118,7 @@ class TypeTest extends TestCase
         };
         PHP);
 
+        /** @phpstan-ignore-next-line */
         $parameter = (new ReflectionClass($class))->getMethod('test')->getParameters()[0] ?? null;
 
         return new Type($parameter?->getType());

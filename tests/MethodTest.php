@@ -77,6 +77,7 @@ class MethodTest extends TestCase
         };
         PHP);
 
+        /** @phpstan-ignore-next-line */
         $method = (new ReflectionClass($class))->getMethod('test');
 
         return new Method($method);
