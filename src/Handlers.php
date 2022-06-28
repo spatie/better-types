@@ -85,6 +85,16 @@ class Handlers
         return $this->filter(fn (Method $method) => $method->accepts(...$input));
     }
 
+    /**
+     * @param string[] $input
+     *
+     * @return self
+     */
+    public function acceptsTypes(array $input):self
+    {
+        return $this->filter(fn(Method $method) => $method->acceptsTypes($input));
+    }
+
     public function public(): self
     {
         $clone = clone $this;

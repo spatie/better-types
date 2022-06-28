@@ -51,6 +51,21 @@ class Method
         return true;
     }
 
+    public function acceptsTypes(array $input): bool
+    {
+        if (count($input) !== $this->inputCount) {
+            return false;
+        }
+
+        foreach ($this->positionalTypes as $index => $type) {
+            if (! $type->hasName($input[$index])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function getName(): string
     {
         return $this->reflectionMethod->getName();
