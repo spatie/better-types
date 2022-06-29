@@ -86,7 +86,7 @@ class Handlers
     }
 
     /**
-     * @param string[] $input
+     * @param array<string> $input
      *
      * @return self
      */
