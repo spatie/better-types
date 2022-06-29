@@ -90,9 +90,7 @@ class HandlersTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_acceptsTypes()
     {
         $this->assertNull(
