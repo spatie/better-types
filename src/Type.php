@@ -61,6 +61,11 @@ class Type
         }
     }
 
+    public function hasName(string $name): bool
+    {
+        return $this->getName() === $name;
+    }
+
     public function getName(): string
     {
         return $this->name;

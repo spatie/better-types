@@ -49,8 +49,8 @@ class HandlersTest extends TestCase
     public function test_all()
     {
         $this->assertCount(1, Handlers::new(Baz::class)->private()->all());
-        $this->assertCount(3, Handlers::new(Baz::class)->public()->all());
-        $this->assertCount(5, Handlers::new(Baz::class)->all());
+        $this->assertCount(4, Handlers::new(Baz::class)->public()->all());
+        $this->assertCount(6, Handlers::new(Baz::class)->all());
         $this->assertCount(1, Handlers::new(Baz::class)->filter(fn (Method $method) => $method->isFinal())->all());
     }
 
@@ -89,6 +89,29 @@ class HandlersTest extends TestCase
                 ->first()
         );
     }
+
+    /** @test */
+    public function test_acceptsTypes()
+    {
+        $this->assertNull(
+            Handlers::new(Baz::class)
+            ->acceptsTypes(['foo'])
+            ->first()
+        );
+
+        $this->assertCount(
+            2,
+            Handlers::new(Baz::class)
+                    ->acceptsTypes(['string'])
+                    ->all()
+        );
+
+        $this->assertNotNull(
+            Handlers::new(Baz::class)
+                    ->acceptsTypes(['string', 'int'])
+                    ->first()
+        );
+    }
 }
 
 class Baz
@@ -103,6 +126,11 @@ class Baz
 
     public function acceptsInt(int $a)
     {
+    }
+
+    public function multipleTypes(string $a, int $b)
+    {
+
     }
 
     private function invisible(array $input)
