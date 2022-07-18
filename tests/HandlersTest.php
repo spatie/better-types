@@ -130,7 +130,6 @@ class Baz
 
     public function multipleTypes(string $a, int $b)
     {
-
     }
 
     private function invisible(array $input)

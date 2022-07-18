@@ -90,9 +90,9 @@ class Handlers
      *
      * @return self
      */
-    public function acceptsTypes(array $input):self
+    public function acceptsTypes(array $input): self
     {
-        return $this->filter(fn(Method $method) => $method->acceptsTypes($input));
+        return $this->filter(fn (Method $method) => $method->acceptsTypes($input));
     }
 
     public function public(): self
