@@ -2,6 +2,10 @@
 
 All notable changes to `better-types` will be documented in this file.
 
+## 0.1.3 - 2023-01-25
+
+Allow L10 collections
+
 ## 0.1.2 - 2022-07-18
 
 - Add accepts types method #4
