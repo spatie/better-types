@@ -53,12 +53,47 @@ class Method
 
     public function acceptsTypes(array $input): bool
     {
+        if ($GLOBALS['better-types.accepts-interfaces']) {
+            return $this->acceptsTypesIncludingInterfaces($input);
+        }
+
         if (count($input) !== $this->inputCount) {
             return false;
         }
 
         foreach ($this->positionalTypes as $index => $type) {
             if (! $type->hasName($input[$index])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function acceptsTypesIncludingInterfaces(array $input): bool
+    {
+        if (count($input) !== $this->inputCount) {
+            return false;
+        }
+
+        foreach ($this->positionalTypes as $index => $type) {
+            $type_hint = $type->getName();
+            $queried_type = $input[$index];
+
+            $type_matches_exactly = $type->hasName($queried_type);
+
+            $type_hint_is_interface = interface_exists($type_hint);
+            $queried_type_is_class = class_exists($queried_type);
+
+            $queried_class_implements_hinted_interface = $type_hint_is_interface
+                && $queried_type_is_class
+                && isset(
+                    class_implements(
+                        $queried_type
+                    )[$type_hint]
+                );
+
+            if (! $type_matches_exactly && ! $queried_class_implements_hinted_interface) {
                 return false;
             }
         }
