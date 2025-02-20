@@ -16,12 +16,12 @@
     ],
     "require": {
         "php": "^8.2",
-        "illuminate/collections": "^10|^11|^12"
+        "illuminate/collections": "^10|^11.43.2|^12"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "phpunit/phpunit": "^10.0|^11.0",
-        "spatie/ray": "^1.28"
+        "friendsofphp/php-cs-fixer": "^3.69.1",
+        "phpunit/phpunit": "^10.0|^11.5.8",
+        "spatie/ray": "^1.41.5"
     },
     "autoload": {
         "psr-4": {
