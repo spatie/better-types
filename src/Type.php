@@ -9,7 +9,7 @@ use ReflectionUnionType;
 
 class Type
 {
-    private static $typeMapping = [
+    private static array $typeMapping = [
         'double' => 'float',
         'int' => 'integer',
         'bool' => 'boolean',
@@ -19,6 +19,9 @@ class Type
 
     private bool $isMixed = false;
 
+    /**
+     * @var array<array-key, null|string>
+     */
     private array $acceptedTypes = [];
 
     private string $name = '';
@@ -33,7 +36,7 @@ class Type
     }
 
     public function __construct(
-        private null | ReflectionType $reflectionType
+        null | ReflectionType $reflectionType
     ) {
         if ($reflectionType === null) {
             $this->isNullable = true;

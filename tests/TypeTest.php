@@ -3,6 +3,8 @@
 namespace Spatie\BetterTypes\Tests;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Spatie\BetterTypes\Type;
@@ -26,16 +28,14 @@ class TypeTest extends TestCase
         yield ['int', 2.1];
     }
 
-    /**
-     * @test
-     * @dataProvider falseValues
-     */
+    #[Test]
+    #[DataProvider('falseValues')]
     public function test_false($type, $input)
     {
         $this->assertFalse($this->makeType($type)->accepts($input));
     }
 
-    /** @test */
+    #[Test]
     public function test_get_name()
     {
         $this->assertEquals('string|int', $this->makeType('string|int')->getName());
