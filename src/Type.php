@@ -36,7 +36,7 @@ class Type
     }
 
     public function __construct(
-        private null | ReflectionType $reflectionType
+        null | ReflectionType $reflectionType
     ) {
         if ($reflectionType === null) {
             $this->isNullable = true;
