@@ -2,6 +2,19 @@
 
 All notable changes to `better-types` will be documented in this file.
 
+## 1.0.1 - 2025-03-08
+
+### What's Changed
+
+* Small improvements by @maartenpaauw in https://github.com/spatie/better-types/pull/7
+* Add support for union types by @maartenpaauw in https://github.com/spatie/better-types/pull/8
+
+### New Contributors
+
+* @maartenpaauw made their first contribution in https://github.com/spatie/better-types/pull/7
+
+**Full Changelog**: https://github.com/spatie/better-types/compare/1.0.0...1.0.1
+
 ## 0.2.0 - 2024-03-08
 
 ### What's Changed
