@@ -58,7 +58,9 @@ class Method
         }
 
         foreach ($this->positionalTypes as $index => $type) {
-            if (! $type->hasName($input[$index])) {
+            if ($type->isUnion() && ! $type->unionContains($input[$index])) {
+                return false;
+            } elseif (! $type->isUnion() && ! $type->hasName($input[$index])) {
                 return false;
             }
         }

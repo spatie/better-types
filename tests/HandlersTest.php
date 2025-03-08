@@ -113,6 +113,15 @@ class HandlersTest extends TestCase
                 ->first()
         );
     }
+
+    #[Test]
+    public function test_union()
+    {
+        $this->assertCount(1, Handlers::new(C::class)->public()->acceptsTypes(['string'])->all());
+        $this->assertCount(1, Handlers::new(C::class)->public()->acceptsTypes(['int'])->all());
+        $this->assertCount(1, Handlers::new(C::class)->public()->acceptsTypes([A::class])->all());
+        $this->assertCount(1, Handlers::new(C::class)->public()->acceptsTypes([B::class])->all());
+    }
 }
 
 class Baz
@@ -138,6 +147,25 @@ class Baz
     }
 
     final protected function finalFunction(float $float)
+    {
+    }
+}
+
+class A
+{
+}
+
+class B
+{
+}
+
+class C
+{
+    public function scalar(int | string $a): void
+    {
+    }
+
+    public function classes(A | B $a): void
     {
     }
 }

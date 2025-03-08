@@ -74,6 +74,16 @@ class Type
         return $this->name;
     }
 
+    public function isUnion(): bool
+    {
+        return count($this->acceptedTypes) > 1;
+    }
+
+    public function unionContains(string $type): bool
+    {
+        return in_array($this->normalize($type), $this->acceptedTypes, true);
+    }
+
     public function accepts(mixed $input): bool
     {
         if ($this->isMixed) {
