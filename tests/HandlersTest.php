@@ -2,6 +2,7 @@
 
 namespace Spatie\BetterTypes\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Spatie\BetterTypes\Handlers;
@@ -9,7 +10,7 @@ use Spatie\BetterTypes\Method;
 
 class HandlersTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function test_find()
     {
         $reflectionClass = new ReflectionClass(new Baz());
@@ -23,7 +24,7 @@ class HandlersTest extends TestCase
         })->all()->keys()->toArray());
     }
 
-    /** @test */
+    #[Test]
     public function test_first()
     {
         $reflectionClass = new ReflectionClass(new Baz());
@@ -36,7 +37,7 @@ class HandlersTest extends TestCase
         })->first());
     }
 
-    /** @test */
+    #[Test]
     public function test_visibility()
     {
         $this->assertNull(Handlers::new(Baz::class)->public()->accepts([])->first());
@@ -45,7 +46,7 @@ class HandlersTest extends TestCase
         $this->assertNotNull(Handlers::new(Baz::class)->public()->protected()->private()->accepts([])->first());
     }
 
-    /** @test */
+    #[Test]
     public function test_all()
     {
         $this->assertCount(1, Handlers::new(Baz::class)->private()->all());
@@ -54,7 +55,7 @@ class HandlersTest extends TestCase
         $this->assertCount(1, Handlers::new(Baz::class)->filter(fn (Method $method) => $method->isFinal())->all());
     }
 
-    /** @test */
+    #[Test]
     public function test_filter()
     {
         $this->assertNull(
@@ -72,7 +73,7 @@ class HandlersTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function test_reject()
     {
         $this->assertNull(
@@ -90,26 +91,26 @@ class HandlersTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function test_acceptsTypes()
     {
         $this->assertNull(
             Handlers::new(Baz::class)
-            ->acceptsTypes(['foo'])
-            ->first()
+                ->acceptsTypes(['foo'])
+                ->first()
         );
 
         $this->assertCount(
             2,
             Handlers::new(Baz::class)
-                    ->acceptsTypes(['string'])
-                    ->all()
+                ->acceptsTypes(['string'])
+                ->all()
         );
 
         $this->assertNotNull(
             Handlers::new(Baz::class)
-                    ->acceptsTypes(['string', 'int'])
-                    ->first()
+                ->acceptsTypes(['string', 'int'])
+                ->first()
         );
     }
 }

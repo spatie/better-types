@@ -3,6 +3,7 @@
 namespace Spatie\BetterTypes\Tests;
 
 use Attribute;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ReflectionAttribute;
 use ReflectionClass;
@@ -11,7 +12,7 @@ use Spatie\BetterTypes\Attributes;
 
 class AttributesTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function test_new_from_class_name()
     {
         $attribute = Attributes::new(AttributesTestClass::class)
@@ -21,7 +22,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestAttribute::class, $attribute);
     }
 
-    /** @test */
+    #[Test]
     public function test_new_from_reflection_class()
     {
         $attribute = Attributes::new(new ReflectionClass(AttributesTestClass::class))
@@ -31,7 +32,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestAttribute::class, $attribute);
     }
 
-    /** @test */
+    #[Test]
     public function test_new_from_object()
     {
         $attribute = Attributes::new(new AttributesTestClass())
@@ -41,7 +42,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestAttribute::class, $attribute);
     }
 
-    /** @test */
+    #[Test]
     public function test_new_from_reflection_method()
     {
         $attribute = Attributes::new(new ReflectionMethod(AttributesTestClass::class, 'test'))
@@ -51,7 +52,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestMethodAttribute::class, $attribute);
     }
 
-    /** @test */
+    #[Test]
     public function test_new_from_array()
     {
         $attribute = Attributes::new([AttributesTestClass::class, 'test'])
@@ -61,7 +62,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestMethodAttribute::class, $attribute);
     }
 
-    /** @test */
+    #[Test]
     public function test_new_from_array_with_object()
     {
         $attribute = Attributes::new([new AttributesTestClass(), 'test'])
@@ -71,7 +72,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestMethodAttribute::class, $attribute);
     }
 
-    /** @test */
+    #[Test]
     public function test_filter()
     {
         $attribute = Attributes::new(AttributesTestClass::class)
@@ -81,7 +82,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestOtherAttribute::class, $attribute);
     }
 
-    /** @test */
+    #[Test]
     public function test_reject()
     {
         $attribute = Attributes::new(AttributesTestClass::class)
@@ -91,7 +92,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestAttribute::class, $attribute);
     }
 
-    /** @test */
+    #[Test]
     public function test_as_attribute()
     {
         $attribute = Attributes::new(AttributesTestClass::class)
@@ -103,7 +104,7 @@ class AttributesTest extends TestCase
         $this->assertEquals(AttributesTestAttribute::class, $attribute->getName());
     }
 
-    /** @test */
+    #[Test]
     public function test_all()
     {
         $attributes = Attributes::new(AttributesTestClass::class)->all();
@@ -113,7 +114,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestOtherAttribute::class, $attributes[1]);
     }
 
-    /** @test */
+    #[Test]
     public function test_all_with_filter()
     {
         $attributes = Attributes::new(AttributesTestClass::class)
@@ -124,7 +125,7 @@ class AttributesTest extends TestCase
         $this->assertInstanceOf(AttributesTestOtherAttribute::class, $attributes[0]);
     }
 
-    /** @test */
+    #[Test]
     public function test_all_with_as_attributes()
     {
         $attributes = Attributes::new(AttributesTestClass::class)
