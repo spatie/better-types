@@ -2,6 +2,10 @@
 
 All notable changes to `better-types` will be documented in this file.
 
+## 1.1.0 - 2026-02-21
+
+Add Laravel 13 support
+
 ## 1.0.1 - 2025-03-08
 
 ### What's Changed
