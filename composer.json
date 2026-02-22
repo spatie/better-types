@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "illuminate/collections": "^10|^11.43.2|^12|^13.0"
+        "illuminate/collections": "^10|^11.43.2|^12|^13.0",
+        "spatie/php-attribute-reader": "^1.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.69.1",

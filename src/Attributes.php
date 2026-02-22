@@ -8,6 +8,7 @@ use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionMethod;
 use Reflector;
+use Spatie\Attributes\Attributes as AttributeReader;
 
 /**
  * @template AttributeType
@@ -101,15 +102,13 @@ class Attributes
      */
     public function all(): iterable|Collection
     {
-        $allAttributes = [];
-
-        if ($this->instanceOf) {
-            $attributes = $this->reflection->getAttributes($this->instanceOf, ReflectionAttribute::IS_INSTANCEOF);
-        } else {
-            $attributes = $this->reflection->getAttributes();
+        if (! $this->asAttributes && $this->filters === []) {
+            return collect($this->getInstantiatedAttributes());
         }
 
-        foreach ($attributes as $attribute) {
+        $allAttributes = [];
+
+        foreach ($this->getRawAttributes() as $attribute) {
             if (! $this->filterAllows($attribute)) {
                 continue;
             }
@@ -129,13 +128,48 @@ class Attributes
      */
     public function first(): mixed
     {
+        if (! $this->asAttributes && $this->filters === []) {
+            return $this->getInstantiatedAttributes()[0] ?? null;
+        }
+
         $first = $this->asAttributes()->all()->first();
 
         if (! $this->asAttributes) {
-            $first = $first->newInstance();
+            $first = $first?->newInstance();
         }
 
         return $first;
+    }
+
+    /**
+     * @return array<ReflectionAttribute>
+     */
+    private function getRawAttributes(): array
+    {
+        if ($this->instanceOf) {
+            return $this->reflection->getAttributes($this->instanceOf, ReflectionAttribute::IS_INSTANCEOF);
+        }
+
+        return $this->reflection->getAttributes();
+    }
+
+    /**
+     * @return array<object>
+     */
+    private function getInstantiatedAttributes(): array
+    {
+        if ($this->reflection instanceof ReflectionMethod) {
+            return AttributeReader::getAllOnMethod(
+                $this->reflection->getDeclaringClass()->getName(),
+                $this->reflection->getName(),
+                $this->instanceOf,
+            );
+        }
+
+        return AttributeReader::getAll(
+            $this->reflection->getName(),
+            $this->instanceOf,
+        );
     }
 
     private function filterAllows(ReflectionAttribute $attribute): bool
