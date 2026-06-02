@@ -3,8 +3,8 @@
 Check whether a reflection type or method accepts a given input
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/better-types.svg?style=flat-square)](https://packagist.org/packages/spatie/better-types)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/better-types/run-tests?label=tests)](https://github.com/spatie/better-types/actions?query=workflow%3ATests+branch%3Amaster)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/better-types/Check%20&%20fix%20styling?label=code%20style)](https://github.com/spatie/better-types/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
+[![GitHub Tests Action Status](https://github.com/spatie/better-types/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/better-types/actions?query=workflow%3ATests+branch%3Amaster)
+[![GitHub Code Style Action Status](https://github.com/spatie/better-types/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/spatie/better-types/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/better-types.svg?style=flat-square)](https://packagist.org/packages/spatie/better-types)
 
 ## Support us
